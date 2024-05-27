@@ -9,8 +9,8 @@ import com.generation.lojagames.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	
-	//SELECT * FROM tb_temas WHERE descricao LIKE "%descricao%";
-	public List<Produto> findAllByNomeContainingIgnoreCase(@Param("Nome") String nome);
+	//SELECT * FROM tb_produtos WHERE descricao LIKE "%Nomes%";
+	public List<Produto> findAllByNomeContainingIgnoreCase(@Param("Nomes") String nome);
 	List<Produto> findAllByOrderByPrecoDesc();
 	List<Produto> findAllByOrderByPrecoAsc();
    

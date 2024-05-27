@@ -20,7 +20,7 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity // classe vai se tornar uma entidade do banco de dados
-@Table(name="tb_produtos")//nomeando a tabela no banco de dados de tb_postagem
+@Table(name="tb_produtos")//nomeando a tabela no banco de dados de tb_produtos
 
 public class Produto {
 	
@@ -29,11 +29,11 @@ public class Produto {
 	private Long id;
 	
 	@NotBlank(message = "Esse campo deve ser preenchido apenas com caracteres ! ")// validation - validar nosso atributo NN e tambem não vazio
-	@Size(min= 3, max = 50 , message = "O atributo  nome  deve ter no minimo 3 caracteres e no maximo 50 .")
+	@Size(min= 3, max = 50 , message = "O atributo  nome  deve ter no minimo 3 caractere e no maximo 50 .")
     private String nome ;
 	
 	@NotBlank(message = "Esse campo deve ser preenchido apenas com caracteres ! ")// validation - validar nosso atributo NN e tambem não vazio
-	@Size(min= 1, max = 20 , message = "O atributo  nome  deve ter no minimo 1 caracteres e no maximo 20 .")
+	@Size(min= 1, max = 20 , message = "O atributo  nome  deve ter no minimo 1 caractere e no maximo 20 .")
 	private String console ;
 	
 	@Column(nullable = false, precision = 6, scale = 2)

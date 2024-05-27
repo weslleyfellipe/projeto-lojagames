@@ -12,8 +12,8 @@ import com.generation.lojagames.model.Categoria;
 
 public interface CategoriaRepository  extends JpaRepository<Categoria, Long>{
 	
-	//SELECT * FROM tb_temas WHERE descricao LIKE "%categoria%";
-	public List<Categoria> findAllByCategoriaContainingIgnoreCase(@Param("Categoria") String categoria);
+	//SELECT * FROM tb_temas WHERE descricao LIKE "%categorias%";
+	public List<Categoria> findAllByCategoriaContainingIgnoreCase(@Param("Categorias") String categoria);
 
 
 }

@@ -24,7 +24,7 @@ public class Categoria {
 	private Long id;
 	
 	@NotBlank(message = "Esse campo deve ser preenchido apenas com caracteres ! ")// validation - validar nosso atributo NN e tambem não vazio
-	@Size(min= 1, max = 20 , message = "O atributo  nome  deve ter no minimo 3 caractere e no maximo 50 .")
+	@Size(min= 1, max = 20 , message = "O atributo  nome  deve ter no minimo 3 caracteres e no maximo 50 .")
 	private String categoria ;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)

@@ -40,11 +40,11 @@ public class ProdutoController {
 
 	}
     
-	@GetMapping("/{id}")//localhost:8080/postagens/1
+	@GetMapping("/{id}")//localhost:8080/produtos/1
 	public ResponseEntity<Produto>getByid(@PathVariable Long id ){
-		//findByid= SELECT * FROM tb_postagens WHERE id = 1
- 	return produtoRepository.findById(id)      //Procura uma postagem pelo seu identificador (id).
-			//	Se encontrar a postagem, retorna essa postagem junto com uma mensagem dizendo que tudo está ok.
+		//findByid= SELECT * FROM tb_produtos WHERE id = 1
+ 	return produtoRepository.findById(id)      //Procura um produto pelo seu identificador (id).
+			//	Se encontrar o produto, retorna esse produto junto com uma mensagem dizendo que tudo está ok.
  	.map(resposta -> ResponseEntity.ok(resposta))    
 	.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // vai fazer a resposta se for falsa e vai apenas buildar e a resposta é Not_Found error 404
 		
@@ -60,18 +60,18 @@ public class ProdutoController {
 		if(categoriaRepository.existsById(produto.getCategoria().getId()))
 			return ResponseEntity.status(HttpStatus.CREATED)
 				.body(produtoRepository.save(produto));
-		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Essa categoria não existe!", null);
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Essa categorias não existe!", null);
 	}
 
 
     @PutMapping
     
 	  public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto){
-		// Verifica se a postagem existe no banco de dados pelo seu ID
+		// Verifica se o produto existe no banco de dados pelo seu ID
 		   if(produtoRepository.existsById(produto.getId())){
-		   		// Se a postagem existe, verifica se o tema associado também existe
+		   		// Se a postagem existe, verifica se a categoria associado também existe
 		   if(categoriaRepository.existsById(produto.getCategoria().getId()))
-			 // Se o tema existe, salva a produto atualizada e retorna um status OK (200)
+			 // Se a categoria existe, salva a produto atualizada e retorna um status OK (200)
 	   		return ResponseEntity.status(HttpStatus.OK)
           .body(produtoRepository.save(produto)); // se todas condincoes for atendida vai salvar.
 		    // Se o tema não existe, lança uma exceção informando que o tema não existe
