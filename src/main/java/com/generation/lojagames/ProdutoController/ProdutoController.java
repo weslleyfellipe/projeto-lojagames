@@ -1,4 +1,4 @@
-package com.generation.ProdutoController;
+package com.generation.lojagames.ProdutoController;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +23,13 @@ import com.generation.lojagames.model.Produto;
 import jakarta.validation.Valid;
 
 @RestController// anotação que diz para o spring que essa é uuma controladora de rotas e acesso ao metodos 
-@RequestMapping("/produto")//rota para chegar nessa classe "insomnia"
+@RequestMapping("/produtos")//rota para chegar nessa classe "insomnia"
 @CrossOrigin(origins = "*",allowedHeaders = "*")//liberar acesso a outras maquinas /allowedHeaders = liberar passagem para paramentos para outras maquinas 
 public class ProdutoController {
 
 	@Autowired // chamada de  dependencias -- instaciar a Classe ProdutoRepository com o codigo abaixo
 	private ProdutoRepository produtoRepository;	
-	
+	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
 	@GetMapping//defini o verbo http que atende esse metodo
@@ -55,27 +55,27 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> getByTitulo(@PathVariable String nome){
         return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
     }
-
-    @PostMapping
-    public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto){
-        if(categoriaRepository.existsById(produto.getCategoria().getId()))
-            return ResponseEntity.status(HttpStatus.CREATED)
-                .body(produtoRepository.save(produto));
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse Categoria não existe!", null);
-    }
+  @PostMapping
+	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto){
+		if(categoriaRepository.existsById(produto.getCategoria().getId()))
+			return ResponseEntity.status(HttpStatus.CREATED)
+				.body(produtoRepository.save(produto));
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Essa categoria não existe!", null);
+	}
 
 
     @PutMapping
-	  public ResponseEntity<Produto> put(@Valid @RequestBody Produto postagem){
+    
+	  public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto){
 		// Verifica se a postagem existe no banco de dados pelo seu ID
-		   if(produtoRepository.existsById(postagem.getId())){
+		   if(produtoRepository.existsById(produto.getId())){
 		   		// Se a postagem existe, verifica se o tema associado também existe
-		   if(categoriaRepository.existsById(postagem.getCategoria().getId()))
+		   if(categoriaRepository.existsById(produto.getCategoria().getId()))
 			 // Se o tema existe, salva a produto atualizada e retorna um status OK (200)
 	   		return ResponseEntity.status(HttpStatus.OK)
-          .body(produtoRepository.save(postagem)); // se todas condincoes for atendida vai salvar.
+          .body(produtoRepository.save(produto)); // se todas condincoes for atendida vai salvar.
 		    // Se o tema não existe, lança uma exceção informando que o tema não existe
-          throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Categoria não existe !", null);
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Produto não existe !", null);
 		 
 	 }
      	// Se a produto não existe, retorna um status de não encontrado (404)
@@ -91,7 +91,16 @@ public class ProdutoController {
 		 produtoRepository.deleteById(id);
 			 
     
+    }
     
+    @GetMapping("/ordenados-por-maior-preco")
+    public List<Produto> listarProdutosOrdenadosPorPrecomaior() {
+        return produtoRepository.findAllByOrderByPrecoDesc();
+    }
+
+    @GetMapping("/ordenados-por-menor-preco")
+    public List<Produto> listarProdutosOrdenadosPorPrecomenor() {
+        return produtoRepository.findAllByOrderByPrecoAsc();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.generation.ProdutoController;
+package com.generation.lojagames.ProdutoController;
 
 import java.util.List;
 import java.util.Optional;

@@ -11,6 +11,9 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	
 	//SELECT * FROM tb_temas WHERE descricao LIKE "%descricao%";
 	public List<Produto> findAllByNomeContainingIgnoreCase(@Param("Nome") String nome);
+	List<Produto> findAllByOrderByPrecoDesc();
+	List<Produto> findAllByOrderByPrecoAsc();
+   
 
 
 }
